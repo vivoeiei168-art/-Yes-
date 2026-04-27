@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💖</title>
+    <style>
+        /* ตั้งค่าหน้าเว็บให้ดูน่ารัก กุ๊กกิ๊ก โทนพาสเทล */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffb3c6 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* ป้องกันไม่ให้หน้าจอดันตอนปุ่มวิ่งหนี */
+            text-align: center;
+        }
+
+        /* กล่องหลักสำหรับคำถาม */
+        #question-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 3rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .button-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px; /* ระยะห่างระหว่างปุ่ม */
+            position: relative;
+        }
+
+        /* สไตล์ปุ่มทั่วไป */
+        button {
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        /* ปุ่ม Yes (ตกลง) ใหญ่ๆ น่ารักๆ */
+        #yes-btn {
+            background-color: #ff4081;
+            color: white;
+            font-size: 2.5rem;
+            padding: 15px 50px;
+            box-shadow: 0 8px 20px rgba(255, 64, 129, 0.4);
+        }
+
+        #yes-btn:hover {
+            transform: scale(1.1);
+            background-color: #f50057;
+        }
+
+        /* ปุ่ม No (ไม่) เล็กๆ เอาไว้ข้างๆ */
+        #no-btn {
+            background-color: #ffffff;
+            color: #888;
+            font-size: 1.2rem;
+            padding: 10px 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative; /* ตำแหน่งเริ่มต้น */
+        }
+
+        /* หน้า Success ตอนกดตกลง (ซ่อนไว้ก่อน) */
+        #success-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        #success-container h1 {
+            color: #e91e63;
+            font-size: 3.5rem;
+        }
+
+        #success-container p {
+            color: #c2185b;
+            font-size: 1.8rem;
+            margin-top: -10px;
+        }
+
+        /* แอนิเมชันตอนเปลี่ยนหน้า */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="question-container">
+        <h1>Will you be my boyfriend? 🥺👨‍❤️‍👨</h1>
+        <div class="button-group">
+            <button id="yes-btn">Yes! 💖</button>
+            <button id="no-btn">No</button>
+        </div>
+    </div>
+
+    <div id="success-container">
+        <h1>I knew you'd say yes! 🥰✨</h1>
+        <p>I'm so happy! Love you na! 💕</p>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const questionContainer = document.getElementById('question-container');
+        const successContainer = document.getElementById('success-container');
+
+        // ฟังก์ชันให้ปุ่มวิ่งหนี
+        const moveButton = () => {
+            // เปลี่ยนเป็น position fixed เพื่อให้วิ่งไปได้ทั่วหน้าจอ
+            noBtn.style.position = 'fixed';
+            
+            // คำนวณตำแหน่งสุ่มใหม่ ไม่ให้ปุ่มล้นขอบจอ
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+        };
+
+        // ดักจับเวลาเมาส์ไปโดน (สำหรับคอม) หรือนิ้วไปแตะ (สำหรับมือถือ)
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
+
+        // ฟังก์ชันตอนกดปุ่ม Yes
+        yesBtn.addEventListener('click', () => {
+            questionContainer.style.display = 'none'; // ซ่อนหน้าคำถาม
+            successContainer.style.display = 'flex'; // โชว์หน้าสมหวัง
+        });
+    </script>
+
+</body>
+</html>
